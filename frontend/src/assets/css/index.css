@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans', sans-serif;
+    box-sizing: border-box;
+}
+
+/* #FFFFFF, #FF2853, #F5EBE6 */
+:root {
+    --pg-color: #FF2853;
+    --sec-color: #F5EBE6;
+    --tri-color: #FFFFFF;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1%;
+
+}
+
+header picture {
+    margin-right: 5%;
+}
+
+nav {
+    width: 45%;
+    padding: 1%;
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.links {
+    text-decoration: none;
+    color: #000000;
+    font-size: 1.5em;
+    padding: 1%;
+    cursor: pointer;
+}
+
+nav :hover {
+    transform: scale(1.2);
+    transition: all .35s linear;
+}
+
+.active {
+    border-bottom: groove var(--pg-color);
+    transition: all .35s linear;
+}
+
+.burgerbox {
+    display: none;
+}
+
+.navdisplay {
+    animation: fadeIn .35s linear;
+    display: flex;
+}
+
+.adminlogin
+{
+    display: flex;
+    padding: 1%;
+    height: 80vh;
+}
+.adminform
+{
+    width: 30vw;
+    padding: 1%;
+}
+
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+
+/* for tablet devices */
+@media only screen and (max-width: 768px) {
+
+    .burgerbox {
+        display: block;
+        width: 20vw;
+    }
+
+    .burgerbox div {
+        border: solid 3px var(--pg-color);
+        margin: 5%;
+    }
+
+    nav {
+
+        position: absolute;
+        flex-direction: column;
+        align-items: center;
+
+        top: 12%;
+        right: 0;
+        display: none;
+        background-color: var(--pg-color);
+        z-index: 1;
+    }
+    .adminform
+    {
+        width: 100vw;
+    }
+    .adminposter
+    {
+        display: none;
+    }
+
+    .links {
+        color: var(--sec-color);
+    }
+}
