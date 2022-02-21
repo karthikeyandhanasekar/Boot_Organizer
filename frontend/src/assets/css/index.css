@@ -7,6 +7,12 @@
     box-sizing: border-box;
 }
 
+.App {
+    background: #8e9eab;
+    background: -webkit-linear-gradient(to left, #eef2f3, #8e9eab);
+    background: linear-gradient(to left, #eef2f3, #8e9eab);
+}
+
 /* #FFFFFF, #FF2853, #F5EBE6 */
 :root {
     --pg-color: #FF2853;
@@ -61,16 +67,35 @@ nav :hover {
     display: flex;
 }
 
-.adminlogin
-{
-    display: flex;
+main {
     padding: 1%;
-    height: 80vh;
+    height: 82vh;
 }
-.adminform
-{
+
+main section {
+    padding: 1%;
+}
+
+.adminlogin, .signmain {
+    display: flex;
+}
+
+.adminform {
     width: 30vw;
     padding: 1%;
+}
+
+
+
+
+
+.createform {
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(315px, 20%));
+    align-items: center;
+    justify-content: center;
+    gap: 1%;
 }
 
 
@@ -84,8 +109,6 @@ nav :hover {
         opacity: 1;
     }
 }
-
-
 
 /* for tablet devices */
 @media only screen and (max-width: 768px) {
@@ -105,23 +128,28 @@ nav :hover {
         position: absolute;
         flex-direction: column;
         align-items: center;
-
         top: 12%;
         right: 0;
         display: none;
         background-color: var(--pg-color);
         z-index: 1;
     }
-    .adminform
-    {
+
+    .adminform {
         width: 100vw;
     }
-    .adminposter
-    {
+
+    .adminposter {
         display: none;
     }
 
     .links {
         color: var(--sec-color);
     }
+
+    .createform {
+        grid-template-columns: repeat(1, minmax(315px, 20%));
+
+    }
+
 }

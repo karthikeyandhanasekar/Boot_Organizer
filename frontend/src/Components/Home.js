@@ -8,6 +8,7 @@ const Home = () => {
     return (
         <React.Fragment>
             <Header active="home" />
+            <main></main>
         </React.Fragment>
     )
 }

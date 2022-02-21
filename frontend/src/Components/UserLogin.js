@@ -47,6 +47,7 @@ const UserLogin = () => {
                 </section>
                 <section className="adminposter">
                     <Carousel autoplay effect="fade">
+                                {/* need to add slideshow of post */}
 
                     </Carousel>
                 </section>
