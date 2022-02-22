@@ -3,22 +3,38 @@ import { Button, Input, Form, Carousel, InputNumber } from "antd"
 import React from "react"
 import Header from "./Elements/Header"
 import { useForm, Controller } from "react-hook-form";
+import { createuser } from "../apiCalls";
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 const SigninPage = () => {
+ const navigate=    useNavigate()
 
     const { handleSubmit, control, reset } = useForm();
 
     //form submit
-    const onsubmit = (data) => {
-        console.log(data);
-        reset({
-            city: "",
-            email: "",
-            name: "",
-            password: "",
-            phoneno: "",
-            state: "",
-        })
+    const onsubmit = async (data) => {
+        try {
+        const res = await    createuser({
+                name:data.name,
+                password:data.password,
+                email:data.email,
+                phoneno:data.phoneno,
+                city:data.city,
+                state:data.state,
+            })
+            res === "OK" ? navigate('/login'):toast.error(res.errors.password.message)
+            reset({
+                city: "",
+                email: "",
+                name: "",
+                password: "",
+                phoneno: "",
+                state: "",
+            })
+        } catch (error) {
+            console.error(error.message);
+        }
     }
 
     return (
@@ -92,7 +108,7 @@ const SigninPage = () => {
                 </section>
                 <section className="adminposter">
                     <Carousel autoplay effect="fade">
-                                {/* need to add slideshow of post */}
+                        {/* need to add slideshow of post */}
                     </Carousel>
                 </section>
             </main>
