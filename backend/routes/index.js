@@ -41,6 +41,7 @@ router.post('/signin', async (req, res, next) => {
 
 });
 
+//welcome mail
 router.post('/signin', async (req, res, next) => {
 
   try {
@@ -57,47 +58,38 @@ router.post('/signin', async (req, res, next) => {
       from: 'dkpraticemail@gmail.com',  // sender address
       to: req.body.email,   // list of receivers
       subject: 'Account Registered',
-      text: `Hi ${req.body.name} , thanks for registering our compay. Soon we will contact you..`,
+      text: `Hi ${req.body.name} , thanks for registering our company. Soon we will contact you..`,
 
     };
     transporter.sendMail(mailOptions, function (err, info) {
       if (err)
         console.log(err)
-      else
+      else {
+        console.log("Info :");
         console.log(info);
+        res.sendStatus(200)
+      }
     });
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-    next()
+
   } catch (error) {
     res.send(error);
   }
 
 });
 
-router.post('/signin', async (req, res, next) => {
-
-  res.sendStatus(200)
-})
 
 
 // verify userlogin account
 router.post('/userlogin', async (req, res, next) => {
 
   try {
+    console.log(req.body);
     const validemail = await userSchema.findOne({ email: req.body.email })
     if (!!validemail) {
       const validpassword = await comparehashdata(req.body.password, validemail.password)
       if (validpassword) {
-        // const user ={
-        //   name:validemail.name,
-        //   email:validemail.email,
-        //   phoneno:validemail.phoneno,
-        //   token:  Math.floor(Math.random*100)
-        // }
-        // console.log(user);
-        // req.session = user
-        // console.log(req.session);
-        res.status(200)
+        console.log(validemail);
+        res.sendStatus(200)
 
       }
       else res.send("Invalid Password")
