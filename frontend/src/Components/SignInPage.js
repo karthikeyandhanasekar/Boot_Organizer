@@ -8,30 +8,36 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
 const SigninPage = () => {
- const navigate=    useNavigate()
+    const navigate = useNavigate()
 
     const { handleSubmit, control, reset } = useForm();
 
     //form submit
     const onsubmit = async (data) => {
         try {
-        const res = await    createuser({
-                name:data.name,
-                password:data.password,
-                email:data.email,
-                phoneno:data.phoneno,
-                city:data.city,
-                state:data.state,
-            })
-            res === "OK" ? navigate('/login'):toast.error(res.errors.password.message)
-            reset({
-                city: "",
-                email: "",
-                name: "",
-                password: "",
-                phoneno: "",
-                state: "",
-            })
+            console.log(data);
+            if (data.password.length >= 8 && data.password.length <= 12) {
+                const res = await createuser({
+                    name: data.name,
+                    password: data.password,
+                    email: data.email,
+                    phoneno: data.phoneno,
+                    city: data.city,
+                    state: data.state,
+                })
+                res === "OK" ? navigate('/userlogin') : toast.error(res)
+
+                reset({
+                    city: "",
+                    email: "",
+                    name: "",
+                    password: "",
+                    phoneno: "",
+                    state: "",
+                })
+            }
+            else
+                toast.error("Password length should be between 8 and 12 characters")
         } catch (error) {
             console.error(error.message);
         }
@@ -105,6 +111,8 @@ const SigninPage = () => {
 
 
                     </Form>
+                    <ToastContainer />
+
                 </section>
                 <section className="adminposter">
                     <Carousel autoplay effect="fade">

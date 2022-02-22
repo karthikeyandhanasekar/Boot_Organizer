@@ -2,20 +2,23 @@ import { Button, Input, Form, Carousel } from "antd"
 import React from "react"
 import Header from "./Elements/Header"
 import { useForm, Controller } from "react-hook-form";
+import { validuserlogin } from "../apiCalls";
+import { ToastContainer, toast } from 'react-toastify';
 
-
+import { useNavigate } from "react-router-dom";
 const UserLogin = () => {
-    const { handleSubmit, control,reset } = useForm();
+    const { handleSubmit, control, reset } = useForm();
+    const navigate = useNavigate()
 
     //form submit
-    const onsubmit = (data) =>
-    {
-        console.log(data);
+    const onsubmit = async (data) => {
+        const result = await validuserlogin({ email: data.email, password: data.password })
+        result === 'OK' ? navigate('/') : toast.error(result)
         reset({
             email: "",
             password: ""
         })
-    } 
+    }
 
     return (
         <React.Fragment>
@@ -44,10 +47,12 @@ const UserLogin = () => {
                             Log in
                         </Button>
                     </Form>
+                    <ToastContainer />
+
                 </section>
                 <section className="adminposter">
                     <Carousel autoplay effect="fade">
-                                {/* need to add slideshow of post */}
+                        {/* need to add slideshow of post */}
 
                     </Carousel>
                 </section>
