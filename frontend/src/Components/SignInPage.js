@@ -15,7 +15,7 @@ const SigninPage = () => {
     //form submit
     const onsubmit = async (data) => {
         try {
-            console.log(data);
+
             if (data.password.length >= 8 && data.password.length <= 12) {
                 const res = await createuser({
                     name: data.name,
@@ -102,7 +102,7 @@ const SigninPage = () => {
                                 } />
                         </Form.Item>
                         <Button type="primary" style={{ background: '#FF2853' }} htmlType="submit">
-                            Log in
+                            Sign in
                         </Button>
                         <Button type="text" htmlType="reset">
                             Clear

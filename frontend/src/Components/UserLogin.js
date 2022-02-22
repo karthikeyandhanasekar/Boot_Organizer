@@ -8,17 +8,35 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 const UserLogin = () => {
     const { handleSubmit, control, reset } = useForm();
+
+    // //forgotpassword modal visibility
+    // const[visible,setvisible] = React.useState(false)
+    // const[forgotdata,setforgotdata] = React.useState({email:"",password:""})
+
+
     const navigate = useNavigate()
 
     //form submit
     const onsubmit = async (data) => {
         const result = await validuserlogin({ email: data.email, password: data.password })
+        console.log(result);
         result === 'OK' ? navigate('/') : toast.error(result)
         reset({
             email: "",
             password: ""
         })
     }
+
+    //reset password
+    // const resetpassword = async ()=>
+    // {
+    //     try {
+    //         const {email,password} = forgotdata
+    //         const result = 
+    //     } catch (error) {
+
+    //     }
+    // }
 
     return (
         <React.Fragment>
@@ -46,7 +64,14 @@ const UserLogin = () => {
                         <Button type="primary" style={{ background: '#FF2853' }} htmlType="submit">
                             Log in
                         </Button>
+                        {/* <Button type="text" onClick={()=>setvisible(true)} >Forgot Password</Button> */}
+
                     </Form>
+
+
+
+
+
                     <ToastContainer />
 
                 </section>

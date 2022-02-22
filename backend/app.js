@@ -7,8 +7,16 @@ var cors = require('cors')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var app = express();
-
+const sessions = require('express-session');
 app.use(cors())
+
+//session
+app.use(sessions({
+  secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+  saveUninitialized:true,
+  cookie: { maxAge:  1000 * 60 * 60 * 24 },
+  resave: false
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
