@@ -5,6 +5,8 @@ const nodemailer = require("nodemailer");
 
 
 const userSchema = require("../Schema/userSchema")
+const adminschema = require("../Schema/adminschema")
+
 
 
 /* GET home page. */
@@ -77,8 +79,6 @@ router.post('/signin', async (req, res, next) => {
 
 });
 
-
-
 // verify userlogin account
 router.post('/userlogin', async (req, res, next) => {
 
@@ -89,22 +89,55 @@ router.post('/userlogin', async (req, res, next) => {
       const validpassword = await comparehashdata(req.body.password, validemail.password)
       if (validpassword) {
         console.log(validemail);
-        res.sendStatus(200)
-
+        res.json({
+          message: "OK",
+          email: validemail.email,
+          name: validemail.name,
+          phoneno: validemail.phoneno,
+        })
       }
-      else res.send("Invalid Password")
+      else
+        res.json({
+          message: "Invalid Password"
+        })
     }
     else {
-      res.send("Invalid Email")
+      res.json({
+        message: "Invalid Email"
+      })
     }
-
-
   } catch (error) {
     res.send(error);
   }
 
 });
+// verify adminlogin account
+router.post('/adminlogin', async (req, res, next) => {
 
+  try {
+    const validemail = await adminschema.findOne({ email: req.body.email })
+    console.log(validemail);
+    if (!!validemail) {
+      if (req.body.password === validemail.password) {
+        res.json({
+          message: "OK",
+        })
+      }
+      else
+        res.json({
+          message: "Invalid Password"
+        })
+    }
+    else {
+      res.json({
+        message: "Invalid Email"
+      })
+    }
+  } catch (error) {
+    res.send(error);
+  }
+
+});
 
 
 module.exports = router;

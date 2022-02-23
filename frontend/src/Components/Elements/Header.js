@@ -1,12 +1,24 @@
 
 import logo from '../../assets/images/brand-transparent.svg';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Dropdown, Menu } from 'antd';
+import React from 'react';
 
 const Header = ({ active }) => {
 
+    const navigate = useNavigate()
     //toogle dislpay nav on mobile
     const displaynav = () => document.querySelector(".navbar").classList.toggle("navdisplay")
+
+    //retrive current user email
+    const currentemail = sessionStorage.getItem("email")
+
+
+    const logout = () => {
+        sessionStorage.clear()
+        navigate('/')
+    }
+
 
     //dropdown menu for login nav
     const menu = (
@@ -33,12 +45,22 @@ const Header = ({ active }) => {
                 <Link to={"/support"} className={`links ${active === 'support' ? 'active' : ''}`}>
                     Support
                 </Link>
-                <Dropdown overlay={menu} placement="bottomCenter" className={`links ${active === 'login' ? 'active' : ''}`}>
-                    <p className='links'> Login </p>
-                </Dropdown>
-                <Link to={"/signin"} className={`links ${active === 'signin' ? 'active' : ''}`}> Signin </Link>
+                {
+                    currentemail ?
+                        <p onClick={logout} className={`links`}> Logout </p>
+
+                        :
+
+                        <React.Fragment>
+                            <Dropdown overlay={menu} placement="bottomCenter" className={`links ${active === 'login' ? 'active' : ''}`}>
+                                <p className='links'> Login </p>
+                            </Dropdown>
+                            <Link to={"/signin"} className={`links ${active === 'signin' ? 'active' : ''}`}> Signin </Link>
+
+                        </React.Fragment>
+                }
             </nav>
-            
+
             <div className='burgerbox' onClick={displaynav}>
                 <div />
                 <div />

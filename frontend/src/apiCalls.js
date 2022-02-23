@@ -14,3 +14,8 @@ export const createuser = async ({ name, password, email, state, city, phoneno }
 export const validuserlogin = async ({ email, password }) => {
     return axios.post(`${baseurl}/userlogin`, { email, password }).then(res => res.data)
 }
+
+//admin login process
+export const validadminlogin = async ({ email, password }) => {
+    return axios.post(`${baseurl}/adminlogin`, { email, password }).then(res => res.data)
+}

@@ -11,12 +11,25 @@ const UserLogin = () => {
 
     const navigate = useNavigate()
 
+    //check whether user session is running
+    React.useEffect(() => {
+        if (sessionStorage.getItem("email"))
+            navigate("/")
+    }, [navigate])
+
     //form submit
     const onsubmit = async (data) => {
-        console.log(data);
+
+        const submitsuccess = (data) => {
+            sessionStorage.setItem("email", data.email)
+            sessionStorage.setItem("name", data.name)
+            sessionStorage.setItem("phoneno", data.phoneno)
+            navigate('/')
+        }
+
         const result = await validuserlogin({ email: data.email, password: data.password })
         console.log(result);
-        result === 'OK' ? navigate('/') : toast.error(result)
+        result.message === 'OK' ? submitsuccess(result) : toast.error(result.message)
         reset({
             email: "",
             password: ""
