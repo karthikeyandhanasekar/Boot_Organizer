@@ -32,7 +32,7 @@ const ForgotPassword = () => {
 
     return (
         <main className="forgetpass">
-            <section>
+            <section >
                 <h1>Forgot Password</h1>
                 <Form layout="vertical" onFinish={handleSubmit(onsubmit)}>
                     {/* email */}

@@ -18,7 +18,7 @@ const AdminLogin = () => {
             // sessionStorage.setItem("email", data.email)
             // sessionStorage.setItem("name", data.name)
             // sessionStorage.setItem("phoneno", data.phoneno)
-            navigate('/')
+            navigate('/addcamp')
         }
 
         const result = await validadminlogin({ email: data.email, password: data.password })
@@ -34,7 +34,7 @@ const AdminLogin = () => {
         <React.Fragment>
             <Header active={"login"} />
             <main className="adminlogin">
-                <section className="adminform">
+                <section className="adminform formsection">
                     <Form layout="vertical" onFinish={handleSubmit(onsubmit)}>
                         {/* email */}
                         <Form.Item label="Email" required tooltip="Email is required" >

@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom"
+import Addbootcamp from "./Components/Addbootcamp"
 import AdminLogin from "./Components/AdminLogin"
 import ForgotPassword from "./Components/forgotpassword"
 import Home from "./Components/Home"
@@ -14,6 +15,8 @@ const MainComponents = () => {
             <Route path="/signin" element={<SigninPage />} />
 
             <Route path="/userlogin" element={<UserLogin />} />
+            <Route path="/addcamp" element={<Addbootcamp />} />
+
             <Route path="/forgotpassword" element={<ForgotPassword />} />
 
 

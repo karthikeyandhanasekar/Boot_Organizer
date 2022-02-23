@@ -47,7 +47,7 @@ const SigninPage = () => {
         <React.Fragment>
             <Header active={"signin"} />
             <main className="signmain">
-                <section >
+                <section className="formsection" >
                     <h1>Hey Trainee!</h1>
                     <Form layout="vertical" className="createform" onFinish={handleSubmit(onsubmit)}>
                         {/* Name */}

@@ -40,7 +40,7 @@ const UserLogin = () => {
         <React.Fragment>
             <Header active={"login"} />
             <main className="adminlogin">
-                <section className="adminform">
+                <section className="adminform formsection">
                     <h1>Hey Trainee!</h1>
                     <Form layout="vertical" onFinish={handleSubmit(onsubmit)}>
                         {/* email */}
