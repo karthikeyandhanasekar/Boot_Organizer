@@ -19,3 +19,8 @@ export const validuserlogin = async ({ email, password }) => {
 export const validadminlogin = async ({ email, password }) => {
     return axios.post(`${baseurl}/adminlogin`, { email, password }).then(res => res.data)
 }
+
+//forget password
+export const forgotpassword = async ({ email, password }) => {
+    return axios.put(`${baseurl}/forgotpassword`, { email, password }).then(res => res.data)
+}

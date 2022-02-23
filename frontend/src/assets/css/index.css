@@ -110,6 +110,12 @@ main section {
     }
 }
 
+.forgetpass {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
 /* for tablet devices */
 @media only screen and (max-width: 768px) {
 

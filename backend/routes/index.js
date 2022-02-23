@@ -103,7 +103,7 @@ router.post('/userlogin', async (req, res, next) => {
     }
     else {
       res.json({
-        message: "Invalid Email"
+        message: "Invalid Email/Not Exist"
       })
     }
   } catch (error) {
@@ -130,7 +130,7 @@ router.post('/adminlogin', async (req, res, next) => {
     }
     else {
       res.json({
-        message: "Invalid Email"
+        message: "Invalid Email/Not Exist"
       })
     }
   } catch (error) {
@@ -138,6 +138,31 @@ router.post('/adminlogin', async (req, res, next) => {
   }
 
 });
+
+// forgotpassword
+router.put('/forgotpassword', async (req, res, next) => {
+
+  try {
+    const validemail = await userSchema.findOne({ email: req.body.email })
+    if (!!validemail) {
+      const result = await userSchema.findOneAndUpdate({ email: req.body.email }, { password: await hashdata(req.body.password) })
+      console.log(result);
+      if (result)
+        res.json({
+          message: "OK"
+        })
+    }
+    else {
+      res.json({
+        message: "Invalid Email/Not Exist"
+      })
+    }
+  } catch (error) {
+    res.send(error);
+  }
+
+});
+
 
 
 module.exports = router;
