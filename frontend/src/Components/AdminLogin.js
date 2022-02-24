@@ -14,8 +14,8 @@ const AdminLogin = () => {
     //form submit
     const onsubmit = async (data) => {
 
-        const submitsuccess = (data) => {
-            // sessionStorage.setItem("email", data.email)
+        const submitsuccess = () => {
+            sessionStorage.setItem("adminemail", data.email)
             // sessionStorage.setItem("name", data.name)
             // sessionStorage.setItem("phoneno", data.phoneno)
             navigate('/addcamp')
@@ -23,7 +23,7 @@ const AdminLogin = () => {
 
         const result = await validadminlogin({ email: data.email, password: data.password })
         console.log(result);
-        result.message === 'OK' ? submitsuccess(result) : toast.error(result.message)
+        result.message === 'OK' ? submitsuccess() : toast.error(result.message)
         reset({
             email: "",
             password: ""

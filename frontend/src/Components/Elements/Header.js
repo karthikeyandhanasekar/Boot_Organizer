@@ -12,6 +12,7 @@ const Header = ({ active }) => {
 
     //retrive current user email
     const currentemail = sessionStorage.getItem("email")
+    const adminemail = sessionStorage.getItem("adminemail")
 
 
     const logout = () => {
@@ -46,7 +47,14 @@ const Header = ({ active }) => {
                     Support
                 </Link>
                 {
-                    currentemail ?
+                    adminemail ?
+                        <Link to={"/"} className={`links ${active === 'support' ? 'active' : ''}`}>
+                            BootCampList
+                        </Link>
+                        : null
+                }
+                {
+                    currentemail || adminemail ?
                         <p onClick={logout} className={`links`}> Logout </p>
 
                         :

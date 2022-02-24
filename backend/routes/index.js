@@ -6,12 +6,30 @@ const nodemailer = require("nodemailer");
 
 const userSchema = require("../Schema/userSchema")
 const adminschema = require("../Schema/adminschema")
+const bootcampschema = require("../Schema/bootcampschema")
+
 
 
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-
+router.get('/', async (req, res, next) => {
+  try {
+    const currentdate = new Date().getDate() + "-" + new Date().getMonth() + "-" + new Date().getYear()
+    const result = await bootcampschema.find({ status: "open" }).sort({ orgdate: 1 })
+    if (result) {
+      res.json({
+        message: "OK",
+        value: result
+      })
+    }
+    else {
+      res.json({
+        message: "Sorry for inconvience.kindly contact our support"
+      })
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
 });
 
 
@@ -156,6 +174,33 @@ router.put('/forgotpassword', async (req, res, next) => {
       res.json({
         message: "Invalid Email/Not Exist"
       })
+    }
+  } catch (error) {
+    res.send(error);
+  }
+
+});
+
+//insert campdetails in mongodb
+router.post('/addcamp', async (req, res, next) => {
+
+  try {
+    const isnameexist = await bootcampschema.findOne({ name: req.body.name })
+    if (!!isnameexist) {
+      res.json({
+        message: "Bootcamp already exist..Try another name"
+      })
+    }
+    else {
+      const result = await bootcampschema.create(req.body)
+      if (result)
+        res.json({
+          message: "OK"
+        })
+      else
+        res.json({
+          message: "Error Occured.Try Again"
+        })
     }
   } catch (error) {
     res.send(error);

@@ -24,3 +24,13 @@ export const validadminlogin = async ({ email, password }) => {
 export const forgotpassword = async ({ email, password }) => {
     return axios.put(`${baseurl}/forgotpassword`, { email, password }).then(res => res.data)
 }
+
+//create bootcamp
+export const createbootcamp = async ({ name, price, company, organizer, organizer2, phone1, phone2, userlimit, orgdate, starttime, endtime }) => {
+    return axios.post(`${baseurl}/addcamp`, { name, price, company, organizer, organizer2, phone1, phone2, userlimit, orgdate, starttime, endtime }).then(res => res.data)
+}
+
+//get bootcamp
+export const getbootcamp = async () => {
+    return axios.get(`${baseurl}/`).then(res => res.data)
+}

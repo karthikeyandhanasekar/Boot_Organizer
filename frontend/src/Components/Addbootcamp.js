@@ -1,12 +1,13 @@
 
 import React from 'react'
-import { Button, Input, Form, DatePicker, TimePicker } from "antd"
+import { Button, Input, Form, DatePicker, TimePicker, InputNumber } from "antd"
 import { useForm, Controller } from "react-hook-form";
 
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import Header from './Elements/Header';
 import ButtonGroup from 'antd/lib/button/button-group';
+import { createbootcamp } from '../apiCalls';
 
 const Addbootcamp = () => {
     const { handleSubmit, control, reset } = useForm();
@@ -18,19 +19,57 @@ const Addbootcamp = () => {
     //dateformat
     const format = 'HH:mm';
 
-    const onsubmit = (data) => {
-        console.log(data);
-        console.log(orgdate);
-        console.log(starttime);
-        console.log(endtime);
-        reset({
-            name: "",
-            company: "",
-            organizer: "",
-            organizer2: "",
-            phone1: "",
-            phone2: ""
-        })
+    const onsubmit = async (data) => {
+        try {
+
+            const submitsuccess = (data) => {
+                toast.success("Created")
+                reset({
+                    name: "",
+                    company: "",
+                    organizer: "",
+                    organizer2: "",
+                    phone1: "",
+                    phone2: "",
+                    userlimit: ""
+                })
+                setdate('')
+                setendtime('')
+                setendtime('')
+            }
+
+
+            if (orgdate && starttime && endtime) {
+
+
+                console.log(data);
+                const result = await createbootcamp({
+                    name: data.name,
+                    company: data.company,
+                    organizer: data.organizer,
+                    organizer2: data.organizer2,
+                    phone1: parseInt(data.phone1),
+                    phone2: parseInt(data.phone2),
+                    price: parseInt(data.price),
+                    userlimit: parseInt(data.userlimit),
+                    orgdate: orgdate,
+                    starttime: starttime,
+                    endtime: endtime
+                })
+                console.log(result);
+                result.message === 'OK' ? submitsuccess(result) : toast.error(result.message)
+
+
+            }
+            else {
+                toast.error("Date/Timming should not empty")
+            }
+
+        } catch (error) {
+            console.error(error.message);
+        }
+
+
     }
 
     return (
@@ -96,12 +135,14 @@ const Addbootcamp = () => {
 
                             <DatePicker onChange={(date, dateString) => setdate(dateString)} required />
                         </Form.Item>
+
                         {/* Start time */}
                         <Form.Item label="Start" required tooltip="Time is required" >
 
                             <TimePicker onChange={(time, timeString) => setstartime(timeString)} format={format} required />
 
                         </Form.Item>
+
                         {/* End time */}
                         <Form.Item label="End" required tooltip="Time is required" >
                             <Controller control={control}
@@ -110,6 +151,25 @@ const Addbootcamp = () => {
                                     <TimePicker onChange={(time, timeString) => setendtime(timeString)} format={format} required />
                                 } />
                         </Form.Item>
+
+                        {/* People limit */}
+                        <Form.Item label="No of People" required tooltip="It   required" >
+                            <Controller control={control}
+                                name="userlimit"
+                                render={({ field }) =>
+                                    <InputNumber className="addcampfield"  {...field} required />
+                                } />
+                        </Form.Item>
+
+                        {/* Price  */}
+                        <Form.Item label="  Price" required tooltip="Price required" >
+                            <Controller control={control}
+                                name="price"
+                                render={({ field }) =>
+                                    <InputNumber className="addcampfield"  {...field} required />
+                                } />
+                        </Form.Item>
+
 
                         <ButtonGroup>
                             <Button type="primary" style={{ background: '#FF2853' }} htmlType="submit">
@@ -120,6 +180,7 @@ const Addbootcamp = () => {
                             </Button>
                         </ButtonGroup>
                     </Form>
+                    <ToastContainer />
                 </section>
             </main>
 

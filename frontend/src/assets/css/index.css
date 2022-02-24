@@ -7,7 +7,7 @@
     box-sizing: border-box;
 }
 
-.App {
+body {
     background: #EDE574;
     /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #E1F5C4, #EDE574);
@@ -127,6 +127,7 @@ main section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(380px, 10%));
     gap: 1%;
+    align-items: center;
 }
 
 
@@ -171,5 +172,11 @@ main section {
         grid-template-columns: repeat(1, minmax(315px, 20%));
 
     }
+
+    .formsection {
+        box-shadow: none;
+        height: fit-content;
+    }
+
 
 }
