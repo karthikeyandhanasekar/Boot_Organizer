@@ -1,20 +1,39 @@
-import { Card } from "antd"
+import { Button } from "antd"
+import { useNavigate } from "react-router-dom"
 
 
 
 const Campdetails = ({ data }) => {
-    return (
-        <Card key={data._id} className="campcard">
-            <h4>{data.name}</h4>
-            <h6>{`by ${data.company}`}</h6>
-            <p>{`Date : ${data.orgdate}`}</p>
-            <p>{`Start : ${data.starttime}`}</p>
 
-            <p>{`End : ${data.endtime}`}</p>
-            <p>{`Status : ${data.status}`}</p>
-            <p>{`Only: ${data.userlimit} are remaining`}</p>
-            <p>{`Price : ${data.price}`}</p>
-        </Card>
+    const navigate = useNavigate()
+
+    const currentuser = sessionStorage.getItem("email")
+
+
+    return (
+        <div key={data._id} className="campcard">
+            <div>
+                <h4>{data.name}</h4>
+                <h6>{`by ${data.company}`}</h6>
+            </div>
+            <div>
+                <p>{`Date : ${data.orgdate}`}</p>
+                <p>{`Start : ${data.starttime} && End : ${data.endtime}`}</p>
+
+                <p>{`Status : ${data.status}`}</p>
+                <p>{`Only ${data.userlimit} are remaining`}</p>
+                <p className="price">{`INR ${data.price}`}</p>
+                {
+                    currentuser ?
+                        <Button type="primary" style={{ background: "#ffffff", color: "#000000" }}>Pay</Button>
+                        :
+                        <Button type="secondary" style={{ background: "#ffffff" }} onClick={() => navigate("/userlogin")}    >Login</Button>
+
+
+                }
+
+            </div>
+        </div>
     )
 }
 

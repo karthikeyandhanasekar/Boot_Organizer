@@ -73,15 +73,18 @@ nav :hover {
 main {
     padding: 1%;
     height: 82vh;
+
 }
 
 main section {
-    padding: 1%;
+    margin: 1%;
 }
 
 .adminlogin, .signmain {
     display: flex;
+    justify-content: space-around;
 }
+
 
 .adminform {
     width: 30vw;
@@ -92,10 +95,12 @@ main section {
 .createform {
 
     display: grid;
-    grid-template-columns: repeat(2, minmax(315px, 20%));
+    grid-template-columns: repeat(2, minmax(300px, 15%));
     align-items: center;
     justify-content: center;
     gap: 1%;
+    width: 50vw;
+    height: 45vh;
 
 }
 
@@ -118,8 +123,9 @@ main section {
 }
 
 .formsection {
-    box-shadow: 0 0 10px 10px sienna;
+    box-shadow: 0 0 10px 10px #a0522d;
     height: fit-content;
+    padding: 1%;
 }
 
 .addcampform {
@@ -128,8 +134,58 @@ main section {
     grid-template-columns: repeat(auto-fit, minmax(380px, 10%));
     gap: 1%;
     align-items: center;
+    width: 100%;
 }
 
+.camplist {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 10vw));
+    gap: 2%;
+    animation: fadeIn 1s linear;
+
+}
+
+
+
+
+.campcard, .carouseldiv {
+    padding: 1%;
+    box-shadow: 0 0 10px 10px #a0522d;
+    cursor: pointer;
+    background-color: var(--pg-color);
+    color: var(--sec-color);
+
+}
+
+.campcard div:first-child {
+    text-align: center;
+    font-size: 2em;
+}
+
+.campcard div:last-child {
+    font-size: 1.2em;
+    text-align: center;
+
+}
+
+.price {
+    color: #008000;
+    font-size: 2em;
+}
+
+.carousel {
+    width: 35vw;
+    padding: 1%;
+    box-shadow: 0 0 10px 10px #a0522d;
+
+}
+
+.carouseldiv {
+    text-align: center;
+    font-size: 2em;
+    background-color: var(--pg-color);
+    color: var(--sec-color);
+}
 
 /* for tablet devices */
 @media only screen and (max-width: 768px) {
@@ -170,7 +226,6 @@ main section {
 
     .createform {
         grid-template-columns: repeat(1, minmax(315px, 20%));
-
     }
 
     .formsection {

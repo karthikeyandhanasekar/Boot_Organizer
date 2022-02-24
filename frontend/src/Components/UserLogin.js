@@ -2,12 +2,19 @@ import { Button, Input, Form, Carousel } from "antd"
 import React from "react"
 import Header from "./Elements/Header"
 import { useForm, Controller } from "react-hook-form";
-import { validuserlogin } from "../apiCalls";
+import { getbootcamp, validuserlogin } from "../apiCalls";
 import { ToastContainer, toast } from 'react-toastify';
 
 import { useNavigate } from "react-router-dom";
 const UserLogin = () => {
     const { handleSubmit, control, reset } = useForm();
+    const [camplist, setcamplist] = React.useState()
+
+    React.useEffect(() => {
+        getbootcamp().then((res) => {
+            setcamplist(res.value);
+        })
+    }, [])
 
     const navigate = useNavigate()
 
@@ -69,9 +76,28 @@ const UserLogin = () => {
 
                 </section>
                 <section className="adminposter">
-                    <Carousel autoplay effect="fade">
-                        {/* need to add slideshow of post */}
+                    <Carousel autoplay className="carousel">
+                        {
+                            camplist ?
+                                camplist.slice(0, 10).map(data =>
+                                    <div key={data._id} className="carouseldiv" >
+                                        <div>
+                                            <h4>{data.name}</h4>
+                                            <h6>{`by ${data.company}`}</h6>
+                                        </div>
+                                        <div>
+                                            <p>{`Date : ${data.orgdate}`}</p>
+                                            <p>{`Start : ${data.starttime} && End : ${data.endtime}`}</p>
 
+                                            <p>{`Status : ${data.status}`}</p>
+                                            <p>{`Only ${data.userlimit} are remaining`}</p>
+                                            <p className="price">{`INR ${data.price}`}</p>
+
+                                        </div>
+                                    </div>
+
+                                ) : null
+                        }
                     </Carousel>
                 </section>
             </main>
