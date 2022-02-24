@@ -25,7 +25,7 @@ const Campdetails = ({ data }) => {
                 <p className="price">{`INR ${data.price}`}</p>
                 {
                     currentuser ?
-                        <Button type="primary" style={{ background: "#ffffff", color: "#000000" }}>Pay</Button>
+                        <Button type="primary" style={{ background: "#008000", color: "#ffffff" }}>Pay</Button>
                         :
                         <Button type="secondary" style={{ background: "#ffffff" }} onClick={() => navigate("/userlogin")}    >Login</Button>
 
