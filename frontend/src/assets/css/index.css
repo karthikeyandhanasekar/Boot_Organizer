@@ -7,6 +7,14 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
 body {
     background: #EDE574;
     /* fallback for old browsers */
@@ -145,9 +153,6 @@ main section {
     animation: fadeIn 1s linear;
 }
 
-
-
-
 .campcard, .carouseldiv {
     padding: 1%;
     box-shadow: 0 0 10px 10px #a0522d;
@@ -185,6 +190,10 @@ main section {
     font-size: 2em;
     background-color: #95e3c0;
     color: #800000;
+}
+
+.dividertitle {
+    color: white;
 }
 
 /* for tablet devices */

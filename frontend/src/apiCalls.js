@@ -36,6 +36,6 @@ export const getbootcamp = async () => {
 }
 
 //get bootcamp
-export const updateuserlist = async ({ id, userdata, status }) => {
-    return axios.put(`${baseurl}/`, { id, userdata, status }).then(res => res.data)
+export const updateuserlist = async ({ id, userdata, status, bootcampdata }) => {
+    return axios.put(`${baseurl}/`, { id, userdata, status, bootcampdata }).then(res => res.data)
 }

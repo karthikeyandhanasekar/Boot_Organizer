@@ -9,7 +9,9 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     phoneno: { type: Number, required: true, length: 10 },
     state: { type: String, required: true },
-    createdAt: { type: Date, required: true, default: new Date().valueOf() }
+    createdAt: { type: Date, required: true, default: new Date().valueOf() },
+    userlists: { type: Array, required: true, default: [] },
+
 })
 
-module.exports = mongoose.model('userlist', userSchema)
+module.exports = mongoose.model('userlists', userSchema)

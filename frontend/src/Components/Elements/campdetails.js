@@ -8,7 +8,7 @@ import upiqr from 'upiqr';
 import { updateuserlist } from "../../apiCalls";
 
 
-const Campdetails = ({ data }) => {
+const Campdetails = ({ data, isregistered }) => {
 
     const [qrcode, setqrcode] = React.useState()
     const [qrurl, setqrurl] = React.useState()
@@ -22,22 +22,6 @@ const Campdetails = ({ data }) => {
 
     const currentuser = sessionStorage.getItem("email")
 
-    /**{_id: '621722f99ff832cecb1265d2', name: 'AWS Beginner', company: 'AWS', organizer: 'Prakash', organizer2: 'Karthik', …}
-    company: "AWS"
-    createdAt: "2022-02-24T06:16:00.619Z"
-    endtime: "17:03"
-    name: "AWS Beginner"
-    organizer: "Prakash"
-    organizer2: "Karthik"
-    orgdate: "2022-02-26"
-    phone1: 1324567890
-    phone2: 1234567890
-    price: 2
-    starttime: "11:46"
-    status: "open"
-    userlimit: 100
-    userlists: [] */
-
 
     //update details
     const handleOk = async () => {
@@ -45,12 +29,23 @@ const Campdetails = ({ data }) => {
             if (transcationid.length !== 0) {
                 const result = await updateuserlist({
                     id: data._id,
+                    //store in bootcamp collection
                     userdata: {
                         name: sessionStorage.getItem("name"),
                         email: sessionStorage.getItem("email"),
                         phoneno: sessionStorage.getItem("phoneno"),
                         transcationid: transcationid,
+                        price: data.price,
                     },
+                    //store in userlist collections
+                    bootcampdata:
+                    {
+                        transcationid: transcationid,
+                        price: data.price,
+                        bootcampid: data._id,
+                        name: data.name,
+                    }
+
                 })
                 console.log(result);
 
@@ -59,7 +54,8 @@ const Campdetails = ({ data }) => {
                     setisModalVisible(false)
                     settranscationid('')
                 }
-                toast.error("failed")
+                else
+                    toast.error("failed")
             }
             else {
                 seterror("Invalid Transcation ID")
@@ -99,26 +95,31 @@ const Campdetails = ({ data }) => {
 
     return (
         <div key={data._id} className="campcard">
-            <div>
+            <div key={data._id + 0} >
                 <h4>{data.name}</h4>
                 <h6>{`by ${data.company}`}</h6>
             </div>
-            <div>
+            <div key={data._id + 1} >
                 <p>{`Date : ${data.orgdate}`}</p>
-                <p>{`Start : ${data.starttime} && End : ${data.endtime}`}</p>
+                <p>{`Start : ${data.starttime} & End : ${data.endtime}`}</p>
+                {!isregistered ?
+                    <React.Fragment>
+                        <p>{`Status : ${data.status}`}</p>
+                        <p>{`Only ${data.userlimit - data.userlists.length} are remaining`}</p>
+                        <p className="price">{`INR ${data.price}`}</p>
+                        {
+                            currentuser ?
+                                <Button type="primary" style={{ background: "#008000", color: "#ffffff" }} onClick={() => campregistration(data)}     >Pay</Button>
+                                :
+                                <Button type="secondary" style={{ background: "#ffffff" }} onClick={() => navigate("/userlogin")}    >Login</Button>
+                        }
 
-                <p>{`Status : ${data.status}`}</p>
-                <p>{`Only ${data.userlimit - data.userlists.length} are remaining`}</p>
-                <p className="price">{`INR ${data.price}`}</p>
-                {
-                    currentuser ?
-                        <Button type="primary" style={{ background: "#008000", color: "#ffffff" }} onClick={() => campregistration(data)}     >Pay</Button>
-                        :
-                        <Button type="secondary" style={{ background: "#ffffff" }} onClick={() => navigate("/userlogin")}    >Login</Button>
-                }
+
+                    </React.Fragment>
+
+                    : null}
 
             </div>
-
             <Modal title="UPI Payment" visible={isModalVisible} onOk={handleOk} onCancel={() => setisModalVisible(false)}>
                 <h4>Warning! Save the transacation details once payment success </h4>
                 <img src={qrcode} alt="BootOrganizer Payment Gateway" />

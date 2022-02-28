@@ -14,12 +14,14 @@ const bootcampschema = require("../Schema/bootcampschema")
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   try {
-    const currentdate = new Date().getDate() + "-" + new Date().getMonth() + "-" + new Date().getYear()
-    const result = await bootcampschema.find({ status: "open" }).sort({ orgdate: 1 })
+    console.log("homepage get");
+    const result = await bootcampschema.find().sort({ orgdate: 1 })
+    const result1 = await userSchema.find({}, { userlists: 1 }).sort({ orgdate: 1 })
     if (result) {
       res.json({
         message: "OK",
-        value: result
+        bootlist: result,
+        registeredbootcamp: result1
       })
     }
     else {
@@ -36,9 +38,10 @@ router.get('/', async (req, res, next) => {
 /* update userlist  */
 router.put('/', async (req, res, next) => {
   try {
-    const result = await bootcampschema.findOneAndUpdate({ _id: req.body.id }, { status: req.body.status, $push: { userlists: req.body.userdata } })
-    console.log(result);
-    if (result) {
+    const result = await userSchema.findOneAndUpdate({ email: req.body.userdata.email }, { $push: { userlists: req.body.bootcampdata } })
+    const result1 = await bootcampschema.findOneAndUpdate({ _id: req.body.id }, { $push: { userlists: req.body.userdata } })
+
+    if (!!result && !!result1) {
 
       res.json({
         message: "OK"
