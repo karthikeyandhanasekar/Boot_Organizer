@@ -23,7 +23,6 @@ const Home = () => {
                     {
                         camplist ?
                             camplist.map(ele => <Campdetails data={ele} key={ele._id} />)
-
                             : null
                     }
                 </section>

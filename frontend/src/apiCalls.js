@@ -34,3 +34,8 @@ export const createbootcamp = async ({ name, price, company, organizer, organize
 export const getbootcamp = async () => {
     return axios.get(`${baseurl}/`).then(res => res.data)
 }
+
+//get bootcamp
+export const updateuserlist = async ({ id, userdata, status }) => {
+    return axios.put(`${baseurl}/`, { id, userdata, status }).then(res => res.data)
+}

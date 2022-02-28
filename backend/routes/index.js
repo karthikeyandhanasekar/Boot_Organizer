@@ -33,6 +33,66 @@ router.get('/', async (req, res, next) => {
 });
 
 
+/* update userlist  */
+router.put('/', async (req, res, next) => {
+  try {
+    const result = await bootcampschema.findOneAndUpdate({ _id: req.body.id }, { status: req.body.status, $push: { userlists: req.body.userdata } })
+    console.log(result);
+    if (result) {
+
+      res.json({
+        message: "OK"
+      })
+      next()
+    }
+
+    else
+      res.json({
+        message: "Error Occured..Try Again"
+      })
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+
+/* bootcamp register approval mail */
+router.put('/', async (req, res, next) => {
+  try {
+    const result = await bootcampschema.findOne({ _id: req.body.id })
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "dkmailpratice@gmail.com", // generated ethereal user
+        pass: "karthik!123",
+      }
+    });
+
+    const mailOptions = {
+      from: 'dkpraticemail@gmail.com',  // sender address
+      to: req.body.userdata.email,   // list of receivers
+      subject: `${result.name} BootCamp Registed Successfully`,
+      text: `Hi ${req.body.userdata.name} , thanks for ${result.name} BootCamp. We will verify your transaction details and contact you. All the best..Hope you all Safe!`,
+    };
+    transporter.sendMail(mailOptions, function (err, info) {
+      if (err)
+        console.log(err)
+      else {
+        console.log("Info :");
+        console.log(info);
+
+      }
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+
+
+
+
 
 //post for createuser account
 router.post('/signin', async (req, res, next) => {

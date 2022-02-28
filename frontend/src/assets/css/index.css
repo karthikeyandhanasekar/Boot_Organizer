@@ -139,10 +139,10 @@ main section {
 
 .camplist {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(380px, 10vw));
-    gap: 2%;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 5vw));
+    gap: 5%;
+    align-items: center;
     animation: fadeIn 1s linear;
-
 }
 
 
@@ -154,6 +154,7 @@ main section {
     cursor: pointer;
     background-color: #95e3c0;
     color: #800000;
+    text-align: center;
 
 }
 
