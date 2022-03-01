@@ -17,6 +17,8 @@ const Header = ({ active }) => {
 
     const logout = () => {
         sessionStorage.clear()
+        window.location.reload();
+
         navigate('/')
     }
 
@@ -39,20 +41,20 @@ const Header = ({ active }) => {
                 < img src={logo} alt="BootOrganizer" />
             </picture>
             <nav className='navbar'>
-                <Link to={"/"} className={`links ${active === 'home' ? 'active' : ''}`} >Home</Link>
+                <Link to={adminemail ? "/camplists" : "/"} className={`links ${active === 'home' ? 'active' : ''}`} >Home</Link>
                 <Link to={"/about"} className={`links ${active === 'about' ? 'active' : ''}`}>
                     About
                 </Link>
                 <Link to={"/support"} className={`links ${active === 'support' ? 'active' : ''}`}>
                     Support
                 </Link>
-                {
+                {/* {
                     adminemail ?
                         <Link to={"/"} className={`links ${active === 'support' ? 'active' : ''}`}>
                             BootCampList
                         </Link>
                         : null
-                }
+                } */}
                 {
                     currentemail || adminemail ?
                         <p onClick={logout} className={`links`}> Logout </p>

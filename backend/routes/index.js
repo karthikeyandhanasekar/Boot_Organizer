@@ -14,7 +14,6 @@ const bootcampschema = require("../Schema/bootcampschema")
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   try {
-    console.log("homepage get");
     const result = await bootcampschema.find().sort({ orgdate: 1 })
     const result1 = await userSchema.find({}, { userlists: 1 }).sort({ orgdate: 1 })
     if (result) {
@@ -34,6 +33,82 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+
+/* GET bootcamp list for admin. */
+router.get('/camplists', async (req, res, next) => {
+  try {
+    const result = await bootcampschema.find().sort({ orgdate: 1 })
+    if (result) {
+      res.json({
+        message: "OK",
+        bootlist: result,
+      })
+    }
+    else {
+      res.json({
+        message: "Sorry for inconvience.kindly contact our support"
+      })
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+
+/* retrive specific bootcamp. */
+router.get('/bootcamp/:id', async (req, res, next) => {
+  try {
+    const result = await bootcampschema.findOne({ _id: req.params.id })
+    if (result) {
+      res.json({
+        message: "OK",
+        bootlist: result,
+      })
+    }
+    else {
+      res.json({
+        message: "Sorry for inconvience.kindly contact our support"
+      })
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+
+/* user status verification. */
+router.put('/bootcamp', async (req, res, next) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "dkmailpratice@gmail.com", // generated ethereal user
+        pass: "karthik!123",
+      }
+    });
+
+    const mailOptions = {
+      from: 'dkpraticemail@gmail.com',  // sender address
+      to: req.body.email,   // list of receivers
+      subject: `${req.body.bname} BootCamp Transcation Verification`,
+      text: `Hi ${req.body.name},Your transcation has been verified. Hope all Safe!  `,
+    };
+    transporter.sendMail(mailOptions, function (err, info) {
+      if (err)
+        console.log(err)
+      else {
+        console.log("Info :");
+        console.log(info);
+        res.json({
+          message: "OK"
+        })
+
+      }
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 
 /* update userlist  */
 router.put('/', async (req, res, next) => {

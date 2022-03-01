@@ -22,6 +22,11 @@ const Campdetails = ({ data, isregistered }) => {
 
     const currentuser = sessionStorage.getItem("email")
 
+    //navigate to bootcamp details page
+    const openuserlist = () => {
+        navigate(`/bootcamp/${data._id}`)
+
+    }
 
     //update details
     const handleOk = async () => {
@@ -36,6 +41,7 @@ const Campdetails = ({ data, isregistered }) => {
                         phoneno: sessionStorage.getItem("phoneno"),
                         transcationid: transcationid,
                         price: data.price,
+                        status: "pending"
                     },
                     //store in userlist collections
                     bootcampdata:
@@ -53,6 +59,7 @@ const Campdetails = ({ data, isregistered }) => {
                     toast.success("Registered")
                     setisModalVisible(false)
                     settranscationid('')
+                    window.location.reload();
                 }
                 else
                     toast.error("failed")
@@ -71,22 +78,26 @@ const Campdetails = ({ data, isregistered }) => {
     //generate qrocode for upi transcation
     const campregistration = async (data) => {
         try {
-            upiqr({
-                payeeVPA: 'dkkarthik2000@okaxis',
-                payeeName: "Karthikeyan Dhanasekar",
-                amount: data.price,
-                transactionNote: "Thanks for payment kindly save transcation id & details for futher process",
-                format: "png",
-            })
-                .then((upi) => {
-                    setqrcode(upi.qr);      // data:image/png;base64,eR0lGODP...
-                    setqrurl(upi.intent);  // upi://pay?pa=john@upi&pn=JOHN DOE
-                    setisModalVisible(true)
-
+            if (data.userlists.length <= data.userlimit) {
+                upiqr({
+                    payeeVPA: 'dkkarthik2000@okaxis',
+                    payeeName: "Karthikeyan Dhanasekar",
+                    amount: data.price,
+                    transactionNote: "Thanks for payment kindly save transcation id & details for futher process",
+                    format: "png",
                 })
-                .catch(err => {
-                    console.error(err);
-                });
+                    .then((upi) => {
+                        setqrcode(upi.qr);      // data:image/png;base64,eR0lGODP...
+                        setqrurl(upi.intent);  // upi://pay?pa=john@upi&pn=JOHN DOE
+                        setisModalVisible(true)
+
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
+            }
+            else
+                toast.warn("Registration Completed")
         } catch (error) {
             console.error(error.message);
         }
@@ -108,11 +119,17 @@ const Campdetails = ({ data, isregistered }) => {
                         <p>{`Only ${data.userlimit - data.userlists.length} are remaining`}</p>
                         <p className="price">{`INR ${data.price}`}</p>
                         {
-                            currentuser ?
-                                <Button type="primary" style={{ background: "#008000", color: "#ffffff" }} onClick={() => campregistration(data)}     >Pay</Button>
+                            sessionStorage.getItem("adminemail") ?
+                                <Button type="primary" style={{ background: "#008000", color: "#ffffff" }} onClick={openuserlist}>Open</Button>
                                 :
-                                <Button type="secondary" style={{ background: "#ffffff" }} onClick={() => navigate("/userlogin")}    >Login</Button>
+                                currentuser ?
+                                    <Button type="primary" style={{ background: "#008000", color: "#ffffff" }} onClick={() => campregistration(data)}     >Pay</Button>
+                                    :
+                                    <Button type="secondary" style={{ background: "#ffffff" }} onClick={() => navigate("/userlogin")}    >Login</Button>
+
+
                         }
+
 
 
                     </React.Fragment>

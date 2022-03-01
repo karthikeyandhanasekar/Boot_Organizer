@@ -196,6 +196,30 @@ main section {
     color: white;
 }
 
+.emptyvalue {
+    font-size: 2em;
+    color: var(--pg-color);
+    word-spacing: 2vw;
+    text-align: center;
+}
+
+.bootcampdata {
+    display: flex;
+    justify-content: space-around;
+}
+
+.bootcampdetails {
+    font-size: 1.2em;
+    padding: 1%;
+    box-shadow: 0 0 10px 10px #a0522d;
+
+}
+
+.usertablelist {
+    border: solid;
+    width: 50vw;
+}
+
 /* for tablet devices */
 @media only screen and (max-width: 768px) {
 
@@ -240,6 +264,13 @@ main section {
     .formsection {
         box-shadow: none;
         height: fit-content;
+    }
+
+    .bootcampdata {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
     }
 
 

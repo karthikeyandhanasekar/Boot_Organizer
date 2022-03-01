@@ -10,8 +10,8 @@ const Home = () => {
 
     const [login, setlogin] = React.useState(!!sessionStorage.getItem("email"))
     const [camplist, setcamplist] = React.useState()
-    const [registeredcamp, setregisteredcamp] = React.useState()
-    const [nonregisteredcamp, setnonregisteredcamp] = React.useState()
+    const [registeredcamp, setregisteredcamp] = React.useState([])
+    const [nonregisteredcamp, setnonregisteredcamp] = React.useState([])
 
 
     React.useEffect(() => {
@@ -19,7 +19,7 @@ const Home = () => {
             if (login) {
 
                 const registedbootcampid = new Set([...res.registeredbootcamp[0].userlists.map(ele => ele.bootcampid)])
-
+                document.title = sessionStorage.getItem("name")
                 //filter non-register camp
                 console.log(typeof res.bootlist);
                 setnonregisteredcamp(res.bootlist.map(ele => {
@@ -43,7 +43,7 @@ const Home = () => {
 
     const dividerstyle = { color: "#800000", fontSize: "2em" }
 
-
+    console.log(camplist);
     return (
         <React.Fragment>
             <Header active="home" />
@@ -56,10 +56,11 @@ const Home = () => {
                                 <br />
                                 <div className="camplist">
                                     {
-                                        registeredcamp ?
+                                        registeredcamp?.length !== 0 ?
                                             registeredcamp.map(ele => <Campdetails isregistered={true} data={ele} key={ele.bootcampid} />)
                                             :
-                                            null
+                                            <h1 className="emptyvalue">Give an Try!</h1>
+
 
 
                                     }</div>
@@ -68,10 +69,10 @@ const Home = () => {
                                 <br />
                                 <div className="camplist">
                                     {
-                                        nonregisteredcamp ?
+                                        nonregisteredcamp?.length !== 0 ?
                                             nonregisteredcamp.map(ele => <Campdetails isregistered={false} data={ele} key={ele.bootcampid} />)
                                             :
-                                            null
+                                            <h1 className="emptyvalue">Wow!Keep it Up</h1>
 
 
                                     }</div>
