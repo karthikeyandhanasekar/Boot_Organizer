@@ -7,6 +7,8 @@ const nodemailer = require("nodemailer");
 const userSchema = require("../Schema/userSchema")
 const adminschema = require("../Schema/adminschema")
 const bootcampschema = require("../Schema/bootcampschema")
+const complaintschema = require("../Schema/complaintSchema")
+
 
 
 
@@ -346,6 +348,45 @@ router.post('/addcamp', async (req, res, next) => {
 
 });
 
+//store complaints
+router.post('/support', async (req, res, next) => {
 
+  try {
+
+    const result = await complaintschema.create(req.body)
+    const ticketid = result._id.toString()
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "dkmailpratice@gmail.com", // generated ethereal user
+        pass: "karthik!123",
+      }
+    });
+
+    const mailOptions = {
+      from: 'dkpraticemail@gmail.com',  // sender address
+      to: req.body.email,   // list of receivers
+      subject: `Complaint Regsitered`,
+      text: `Sorry for the Inconivence.we will support and clear this issue as soon as possible.
+      
+      Your ticket is ${ticketid}  `,
+    };
+    transporter.sendMail(mailOptions, function (err, info) {
+      if (err)
+        console.log(err)
+      else {
+        console.log("Info :");
+        console.log(info);
+        res.json({
+          message: "OK"
+        })
+      }
+    });
+
+  } catch (error) {
+    res.send(error);
+  }
+
+});
 
 module.exports = router;

@@ -12,7 +12,7 @@ const UserLogin = () => {
 
     React.useEffect(() => {
         getbootcamp().then((res) => {
-            setcamplist(res.value);
+            setcamplist(res.bootlist);
         })
     }, [])
 

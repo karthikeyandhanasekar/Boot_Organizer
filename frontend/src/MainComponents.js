@@ -6,6 +6,7 @@ import AdminUserList from "./Components/AdminUserlists"
 import ForgotPassword from "./Components/forgotpassword"
 import Home from "./Components/Home"
 import SigninPage from "./Components/SignInPage"
+import Support from "./Components/Support"
 import UserLogin from "./Components/UserLogin"
 
 const MainComponents = () => {
@@ -15,6 +16,8 @@ const MainComponents = () => {
             <Route path="/" element={<Home />} />
             <Route path="/adminlogin" element={<AdminLogin />} />
             <Route path="/signin" element={<SigninPage />} />
+            <Route path="/support" element={<Support />} />
+
 
             <Route path="/userlogin" element={<UserLogin />} />
             <Route path="/addcamp" element={<Addbootcamp />} />
