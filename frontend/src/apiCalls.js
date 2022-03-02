@@ -52,9 +52,14 @@ export const verifytranscationdetails = async ({ email, bname, name }) => {
     return axios.put(`${baseurl}/bootcamp`, { email, bname, name }).then(res => res.data)
 }
 
-//user help support
+//register user complaint 
 export const userhelpsupport = async ({ email, query }) => {
     return axios.post(`${baseurl}/support`, { email, query }).then(res => res.data)
+}
+
+//retrive complaint list
+export const retrivecomplaints = async () => {
+    return axios.get(`${baseurl}/complaintlist`).then(res => res.data)
 }
 
 

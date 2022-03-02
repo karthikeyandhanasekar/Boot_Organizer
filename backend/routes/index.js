@@ -389,4 +389,26 @@ router.post('/support', async (req, res, next) => {
 
 });
 
+
+//store complaints
+router.get('/complaintlist', async (req, res, next) => {
+
+  try {
+
+    const result = await complaintschema.find()
+    if (result)
+      res.json({
+        message: "OK",
+        value: result
+      })
+  }
+
+  catch (error) {
+    res.send(error);
+  }
+
+});
+
+
+
 module.exports = router;

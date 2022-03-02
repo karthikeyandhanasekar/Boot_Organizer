@@ -258,6 +258,24 @@ cite {
     border: solid;
 }
 
+.complaintable {
+    border-collapse: collapse;
+    font-size: 1.1em;
+    width: 100%;
+}
+
+.even {
+    background-color: var(--sec-color);
+}
+
+th, td {
+    border: groove;
+    padding: 1%;
+    width: 1%;
+    white-space: pre-wrap;
+    text-align: justify;
+}
+
 /* for tablet devices */
 @media only screen and (max-width: 768px) {
 
@@ -319,8 +337,11 @@ cite {
         width: 100%;
     }
 
-    .supportform {
-        box-shadow: 0 0 10px 10px #a0522d;
+    cite {
+        font-size: 1.4em;
+    }
+
+    .table, .supportform {
         overflow: scroll;
     }
 
