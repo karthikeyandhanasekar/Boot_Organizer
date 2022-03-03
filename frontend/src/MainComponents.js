@@ -21,7 +21,7 @@ const MainComponents = () => {
             <Route path="/complaintlist" element={<AdminComplaintList />} />
             <Route path="/userlogin" element={<UserLogin />} />
             <Route path="/addcamp" element={<Addbootcamp />} />
-            <Route path="/camplists" element={<AdminCamplist />} />
+            <Route path="/adminhomepage" element={<AdminCamplist />} />
 
             <Route path="/bootcamp/:id" element={<AdminUserList />} />
 

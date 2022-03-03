@@ -10,15 +10,18 @@ const AdminCamplist = () => {
 
 
     React.useEffect(() => {
-        admingetbootcamp().then((res) => {
+        admingetbootcamp({id:0}).then((res) => {
+            console.log(res.bootlist);
             setcamplist(res.bootlist)
         })
+            .catch(err =>
+                console.log(err.message))
     }, [])
     document.title = "Admin"
     console.log(camplist);
     return (
         <React.Fragment>
-            <Header />
+            <Header active={"home"} />
             <main>
                 <section className={"camplist"}>
                     {

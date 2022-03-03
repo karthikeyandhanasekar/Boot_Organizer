@@ -41,15 +41,21 @@ const Header = ({ active }) => {
                 < img src={logo} alt="BootOrganizer" />
             </picture>
             <nav className='navbar'>
-                <Link to={adminemail ? "/camplists" : "/"} className={`links ${active === 'home' ? 'active' : ''}`} >Home</Link>
+                <Link to={adminemail ? "/adminhomepage" : "/"} className={`links ${active === 'home' ? 'active' : ''}`} >Home</Link>
                 <Link to={"/about"} className={`links ${active === 'about' ? 'active' : ''}`}>
                     About
                 </Link>
                 {
                     adminemail ?
-                        <Link to={"/complaintlist"} className={`links ${active === 'complaint' ? 'active' : ''}`}>
-                            Complaints
-                        </Link> :
+                        <React.Fragment>
+                            <Link to={"/complaintlist"} className={`links ${active === 'complaint' ? 'active' : ''}`}>
+                                Complaints
+                            </Link>
+                            <Link to={"/addcamp"} className={`links ${active === 'addcamp' ? 'active' : ''}`}>
+                                AddCamp
+                            </Link>
+                        </React.Fragment>
+                        :
                         <Link to={"/support"} className={`links ${active === 'support' ? 'active' : ''}`}>
                             Support
                         </Link>

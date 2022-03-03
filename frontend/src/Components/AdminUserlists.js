@@ -3,34 +3,34 @@ import Column from "antd/lib/table/Column";
 import ColumnGroup from "antd/lib/table/ColumnGroup";
 import React from "react";
 import { useParams } from "react-router"
-import { retirvespecificbootcamp, updateuserlist, verifytranscationdetails } from "../apiCalls";
+import { retirvespecificbootcamp, verifytranscationdetails } from "../apiCalls";
 import Header from "./Elements/Header";
-
 import { ToastContainer, toast } from 'react-toastify';
-
+import { useNavigate } from "react-router-dom";
 
 const AdminUserList = () => {
     const [bootcampdata, setbootcampdata] = React.useState()
     const params = useParams()
     const id = params.id
+    const navigate = useNavigate()
 
     React.useEffect(() => {
+        if (!sessionStorage.getItem("adminemail"))
+            navigate("/")
         retirvespecificbootcamp({ id: id }).then((res) => {
             setbootcampdata(res.bootlist)
         })
 
     }, [id])
 
-    const verifytranscation = async (data) => {
-        console.log(data.row);
+    const verifytranscation = async ({ data, text }) => {
+        console.log(data);
         try {
             const success = () => {
-                // const filterdata = bootcampdata.userlists.filter(ele => ele.email !== data.row.name)
-                // console.log(filterdata);
-                // setbootcampdata(filterdata)
                 toast.success("Verified")
+                window.location.reload()
             }
-            const result = await verifytranscationdetails({ email: data.row.email, bname: bootcampdata.name, name: data.row.name })
+            const result = await verifytranscationdetails({ email: data.email, bname: bootcampdata.name, id: id, name: data.name })
             result.message === "OK" ? success() : toast.error("Error Received")
         } catch (error) {
             console.error(error.message);
@@ -38,13 +38,6 @@ const AdminUserList = () => {
     }
 
     document.title = bootcampdata?.name
-    console.log(bootcampdata?.userlists);
-    /**email: "dkkarthik2000@gmail.com"
-name: "KARTHIKEYAN D"
-phoneno: "919123565978"
-price: 20
-status: "pending"
-transcationid: "1234657890" */
     return (
         <React.Fragment>
             <Header active={"home"} />
@@ -65,10 +58,18 @@ transcationid: "1234657890" */
                                 <Column title="Phone Number" dataIndex="phoneno" key="phoneno" responsive={['sm']} />
                                 <Column title="Transcation ID" dataIndex="transcationid" key="transctionid" />
                                 {/* <Column title="Status" dataIndex="status" key="status" responsive={["sm"]} /> */}
-                                <Column title="Verify" dataIndex="email" key="verify" render={
-                                    (text, row) => <Button type="primary" onClick={() => verifytranscation({
-                                        row
-                                    })}   >Verify</Button>
+                                <Column title="Status" dataIndex="email" key="verify" render={
+                                    (text, row) => {
+                                        if (row.status === "verified")
+                                            return (<p style={{ color: "darkgreen" }}>Verified</p>)
+                                        else
+                                            return <Button type="primary" onClick={() => verifytranscation({
+                                                data: row,
+                                                text: text
+                                            })}   >Verify</Button>
+
+                                    }
+
                                 } />
 
 

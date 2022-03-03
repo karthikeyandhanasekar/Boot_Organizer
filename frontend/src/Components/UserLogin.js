@@ -31,6 +31,7 @@ const UserLogin = () => {
             sessionStorage.setItem("email", data.email)
             sessionStorage.setItem("name", data.name)
             sessionStorage.setItem("phoneno", data.phoneno)
+            sessionStorage.setItem("userid", data.id)
             navigate('/')
         }
 

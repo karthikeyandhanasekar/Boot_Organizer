@@ -1,6 +1,6 @@
 import { Divider } from "antd"
 import React from "react"
-import { getbootcamp } from "../apiCalls"
+import { getbootcamp, getuserhomepage } from "../apiCalls"
 import Campdetails from "./Elements/campdetails"
 import Header from "./Elements/Header"
 
@@ -8,15 +8,18 @@ import Header from "./Elements/Header"
 
 const Home = () => {
 
-    const [login, setlogin] = React.useState(!!sessionStorage.getItem("email"))
+    const [login] = React.useState(!!sessionStorage.getItem("email"))
     const [camplist, setcamplist] = React.useState()
     const [registeredcamp, setregisteredcamp] = React.useState([])
     const [nonregisteredcamp, setnonregisteredcamp] = React.useState([])
 
 
+
     React.useEffect(() => {
-        getbootcamp().then((res) => {
-            if (login) {
+        if (login) {
+            getuserhomepage({ id: sessionStorage.getItem("userid") }).then((res) => {
+
+                document.title = sessionStorage.getItem("name")
 
                 const registedbootcampid = new Set([...res.registeredbootcamp[0].userlists.map(ele => ele.bootcampid)])
                 document.title = sessionStorage.getItem("name")
@@ -27,20 +30,24 @@ const Home = () => {
                         return ele
                 }).filter(Boolean))
 
-
-
                 //filter registercamp
                 setregisteredcamp(res.bootlist.map(ele => {
                     if (registedbootcampid.has(ele._id))
                         return ele
                 }).filter(Boolean))
-            }
-            else
+            })
+        }
+        else {
+            getbootcamp().then((res) => {
                 setcamplist(res.bootlist)
+                document.title = "Home"
 
-        })
+            })
+        }
+
     }, [login])
 
+    console.log(nonregisteredcamp);
     const dividerstyle = { color: "#800000", fontSize: "2em" }
 
     console.log(camplist);

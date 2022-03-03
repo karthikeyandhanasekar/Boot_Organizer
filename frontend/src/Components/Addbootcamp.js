@@ -74,7 +74,7 @@ const Addbootcamp = () => {
 
     return (
         <React.Fragment>
-            <Header />
+            <Header active={"addcamp"} />
             <main>
 
                 <section className='addcamp formsection'>

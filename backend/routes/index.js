@@ -13,11 +13,33 @@ const complaintschema = require("../Schema/complaintSchema")
 
 
 
+/* GET user home page. */
+router.get('/:id', async (req, res, next) => {
+  try {
+    const result = await bootcampschema.find().sort({ orgdate: 1 })
+    const result1 = await userSchema.find({ _id: req.params.id }, { userlists: 1 }).sort({ orgdate: 1 })
+    if (result) {
+      res.json({
+        message: "OK",
+        bootlist: result,
+        registeredbootcamp: result1
+      })
+    }
+    else {
+      res.json({
+        message: "Sorry for inconvience.kindly contact our support"
+      })
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   try {
     const result = await bootcampschema.find().sort({ orgdate: 1 })
-    const result1 = await userSchema.find({}, { userlists: 1 }).sort({ orgdate: 1 })
+    const result1 = await userSchema.find({ _id: req.params.id }, { userlists: 1 }).sort({ orgdate: 1 })
     if (result) {
       res.json({
         message: "OK",
@@ -37,9 +59,11 @@ router.get('/', async (req, res, next) => {
 
 
 /* GET bootcamp list for admin. */
-router.get('/camplists', async (req, res, next) => {
+router.get('/adminhomepage/:id', async (req, res, next) => {
   try {
+    console.log(req.body);
     const result = await bootcampschema.find().sort({ orgdate: 1 })
+    console.log(result);
     if (result) {
       res.json({
         message: "OK",
@@ -76,10 +100,20 @@ router.get('/bootcamp/:id', async (req, res, next) => {
     console.error(error.message);
   }
 });
-
+/* user status verification. */
+router.put('/bootcamp/:id', async (req, res, next) => {
+  try {
+    const findbootcamp = await bootcampschema.findOneAndUpdate({ _id: req.params.id, "userlists.email": req.body.email }, { "userlists.$.status": "verified" })
+    if (findbootcamp) {
+      next()
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 
 /* user status verification. */
-router.put('/bootcamp', async (req, res, next) => {
+router.put('/bootcamp/:id', async (req, res, next) => {
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -252,6 +286,7 @@ router.post('/userlogin', async (req, res, next) => {
           email: validemail.email,
           name: validemail.name,
           phoneno: validemail.phoneno,
+          id: validemail._id
         })
       }
       else
@@ -391,7 +426,7 @@ router.post('/support', async (req, res, next) => {
 
 
 //store complaints
-router.get('/complaintlist', async (req, res, next) => {
+router.get('/complaintlist/:id', async (req, res, next) => {
 
   try {
 

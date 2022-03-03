@@ -31,14 +31,19 @@ export const createbootcamp = async ({ name, price, company, organizer, organize
 }
 
 
+//get user bootcamp
+export const getuserhomepage = async ({ id }) => {
+    return axios.get(`${baseurl}/${id}`).then(res => res.data)
+}
+
 //get bootcamp
 export const getbootcamp = async () => {
     return axios.get(`${baseurl}/`).then(res => res.data)
 }
 
 //get bootcamp list for admin
-export const admingetbootcamp = async () => {
-    return axios.get(`${baseurl}/camplists`).then(res => res.data)
+export const admingetbootcamp = async ({ id }) => {
+    return axios.get(`${baseurl}/adminhomepage/${id}`).then(res => res.data)
 }
 
 
@@ -48,8 +53,8 @@ export const retirvespecificbootcamp = async ({ id }) => {
 }
 
 //verify user transcation
-export const verifytranscationdetails = async ({ email, bname, name }) => {
-    return axios.put(`${baseurl}/bootcamp`, { email, bname, name }).then(res => res.data)
+export const verifytranscationdetails = async ({ email, id, name,bname }) => {
+    return axios.put(`${baseurl}/bootcamp/${id}`, { email, name,bname }).then(res => res.data)
 }
 
 //register user complaint 
@@ -58,8 +63,8 @@ export const userhelpsupport = async ({ email, query }) => {
 }
 
 //retrive complaint list
-export const retrivecomplaints = async () => {
-    return axios.get(`${baseurl}/complaintlist`).then(res => res.data)
+export const retrivecomplaints = async ({ id }) => {
+    return axios.get(`${baseurl}/complaintlist/:${id}`).then(res => res.data)
 }
 
 

@@ -18,7 +18,7 @@ const AdminComplaintList = () => {
         if (!sessionStorage.getItem("adminemail"))
             navigate("/adminlogin")
         else
-            retrivecomplaints().then((res) => {
+            retrivecomplaints({ id: 0 }).then((res) => {
                 getcomplaints(res.value)
             })
     }, [navigate])
@@ -30,10 +30,12 @@ const AdminComplaintList = () => {
                 <section className="table">
                     <table className="complaintable">
                         <thead>
-                            <th>ID</th>
-                            <th>Email</th>
-                            <th>Query</th>
-                            <th>Date</th>
+                            <tr>
+                                <th>ID</th>
+                                <th>Email</th>
+                                <th>Query</th>
+                                <th>Date</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {
