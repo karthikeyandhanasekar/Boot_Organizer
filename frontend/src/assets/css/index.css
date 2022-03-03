@@ -81,7 +81,10 @@ nav :hover {
 main {
     padding: 1%;
     height: 82vh;
-
+}
+.autocomplete
+{
+    width: 100%;
 }
 
 main section {

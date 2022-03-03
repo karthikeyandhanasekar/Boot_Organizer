@@ -1,10 +1,7 @@
-import { ExceptionMap } from "antd/lib/result"
 import React from "react"
 import { useNavigate } from "react-router-dom"
 import { retrivecomplaints } from "../apiCalls"
 import Header from "./Elements/Header"
-
-
 
 
 const AdminComplaintList = () => {

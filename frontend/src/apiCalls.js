@@ -53,8 +53,8 @@ export const retirvespecificbootcamp = async ({ id }) => {
 }
 
 //verify user transcation
-export const verifytranscationdetails = async ({ email, id, name,bname }) => {
-    return axios.put(`${baseurl}/bootcamp/${id}`, { email, name,bname }).then(res => res.data)
+export const verifytranscationdetails = async ({ email, id, name, bname }) => {
+    return axios.put(`${baseurl}/bootcamp/${id}`, { email, name, bname }).then(res => res.data)
 }
 
 //register user complaint 

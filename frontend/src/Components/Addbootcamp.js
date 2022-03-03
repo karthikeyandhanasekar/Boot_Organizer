@@ -3,7 +3,6 @@ import React from 'react'
 import { Button, Input, Form, DatePicker, TimePicker, InputNumber } from "antd"
 import { useForm, Controller } from "react-hook-form";
 
-import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import Header from './Elements/Header';
 import ButtonGroup from 'antd/lib/button/button-group';
@@ -11,7 +10,6 @@ import { createbootcamp } from '../apiCalls';
 
 const Addbootcamp = () => {
     const { handleSubmit, control, reset } = useForm();
-    const navigate = useNavigate()
     const [orgdate, setdate] = React.useState()
     const [starttime, setstartime] = React.useState()
     const [endtime, setendtime] = React.useState()

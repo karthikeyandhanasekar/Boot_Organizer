@@ -21,7 +21,7 @@ const AdminUserList = () => {
             setbootcampdata(res.bootlist)
         })
 
-    }, [id])
+    }, [id, navigate])
 
     const verifytranscation = async ({ data, text }) => {
         console.log(data);
